@@ -4,7 +4,6 @@ use Mouse;
 use Coro;
 use Coro::Socket;
 use IO::Socket();
-use Log::Log4perl;
 use Scalar::Util;
 use GSC::Stream;
 use GSC::Server::Handler;
@@ -226,7 +225,7 @@ GSC::Server - framework для написания сервера для игры
     # Возвращает класс/объект контроллера соединения, объект GSC::Server::ConnectionController по умолчанию
     sub connection_controller {
       my($self) = @_;
-      ....
+      ...
     }
     
     sub handler_class { 'GSC::Server::Handler' }  # Класс хендлера, GSC::Server::Handler по умолчанию
