@@ -14,7 +14,7 @@ sub BUILD {
   if($self->_sockaddr) {
     my($port, $addr) = Socket::sockaddr_in($self->_sockaddr);
     $self->ip( Socket::inet_ntoa $addr );
-    $self->int_ip( unpack 'N', $addr );
+    $self->int_ip( unpack 'L', $addr );
     $self->port( $port );
   }
 }
