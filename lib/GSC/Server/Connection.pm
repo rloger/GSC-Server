@@ -1,7 +1,6 @@
 package GSC::Server::Connection;
 use Mouse;
 use Socket();
-use Coro::Util();
 
 has _socket => (is => 'ro', weak_ref => 1);
 has _sockaddr => (is => 'ro');
@@ -14,7 +13,7 @@ sub BUILD {
   my($self) = @_;
   if($self->_sockaddr) {
     my($port, $addr) = Socket::sockaddr_in($self->_sockaddr);
-    $self->ip( Coro::Util::inet_ntoa $addr );
+    $self->ip( Socket::inet_ntoa $addr );
     $self->int_ip( unpack 'L', $addr );
     $self->port( $port );
   }
