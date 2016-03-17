@@ -20,6 +20,7 @@ has config => (is => 'rw', builder => '_create_config');
 has _connection_controller => (is => 'rw', default => sub { GSC::Server::ConnectionController->new() });
 has data => (is => 'rw', default => sub { +{} });
 has use_sig => (is => 'ro', default => 1);
+has max_request_size => (is => 'rw', default => 4194304);
 
 sub BUILD {
   my($self) = @_;
@@ -102,9 +103,12 @@ sub _accept {
       $client_socket->close();
       $self->connection_controller->_close($h);
     } else {
-      
       my $first = 1;
-      while(my $req = GSC::Stream->from_read($client_socket)) {
+      while(my $req = GSC::Stream->from_read($client_socket, $self->max_request_size)) {
+        if($req->error) {
+          $self->log->error('error while parsing request: ' . $req->error_text); 
+          last;
+        }
         if($req->cmdset->count == 0) {
             $self->log->error("empty command list. ignoring") if $req->cmdset->count > 1;
             next;
