@@ -13,5 +13,5 @@ WriteMakefile(
 }, # e.g., Module::Name => 1.1
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
       (ABSTRACT_FROM  => 'lib/GSC/Server.pm', # retrieve abstract from module
-       AUTHOR         => 'ilya <ilya@>') : ()),
+       AUTHOR         => '[-RUS-]AlliGator') : ()),
 );
